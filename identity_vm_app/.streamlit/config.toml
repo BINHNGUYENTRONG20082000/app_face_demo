@@ -1,0 +1,4 @@
+[server]
+# Khi chạy `run_ui.bat` từ thư mục identity_vm_app (cwd khác repo root).
+maxUploadSize = 102400
+maxMessageSize = 102400

@@ -1,0 +1,4 @@
+[server]
+# Streamlit không hỗ trợ upload vô hạn; đặt rất lớn (MB) để bỏ giới hạn thực tế.
+maxUploadSize = 102400
+maxMessageSize = 102400

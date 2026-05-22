@@ -1,0 +1,108 @@
+# =============================================================================
+# Identity VM — chỉ commit source code
+# Mọi dữ liệu runtime, model, media, secret: giữ local, không đưa lên git
+# =============================================================================
+
+# --- Python / build ---
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+.Python
+build/
+dist/
+*.egg-info/
+.eggs/
+pip-wheel-metadata/
+
+# --- Virtualenv & secrets ---
+.venv/
+venv/
+env/
+ENV/
+.env
+.env.*
+!.env.example
+
+# --- IDE / OS ---
+.vscode/
+.idea/
+*.swp
+*.swo
+.DS_Store
+Thumbs.db
+desktop.ini
+
+# --- Logs, cache, test artifacts ---
+*.log
+logs/
+.cache/
+*.cache
+.pytest_cache/
+.coverage
+htmlcov/
+.tox/
+.mypy_cache/
+.ruff_cache/
+
+# --- Runtime data (tạo khi chạy app) ---
+identity_vm_data/
+face_db/
+face_db_backup_*/
+.ivm_bulk_test_run/
+data_test_live/
+data_test_stream/
+
+# SQLite / index / embedding store
+*.sqlite3
+*.sqlite
+*.db
+*.index
+metadata.json
+*.npy
+*.npz
+
+# --- Cấu hình local (có RTSP / mật khẩu) ---
+camera_config.json
+
+# --- Model & checkpoint (chỉ giữ README trong modelAi/) ---
+*.pt
+*.pth
+*.onnx
+*.engine
+*.trt
+*.weights
+*.ckpt
+*.safetensors
+buffalo_l/
+
+# --- Media / binary (không phải code) ---
+*.mp4
+*.avi
+*.mov
+*.mkv
+*.webm
+*.flv
+*.wmv
+*.jpg
+*.jpeg
+*.png
+*.gif
+*.bmp
+*.webp
+*.tiff
+*.raw
+*.wav
+*.mp3
+
+# --- Streamlit secrets ---
+.streamlit/secrets.toml
+**/secrets.toml
+
+# --- File tạm / output thử nghiệm ---
+*.tmp
+*.temp
+temp/
+tmp/
+_test_frame.*
+t1_output.jpg

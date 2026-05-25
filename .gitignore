@@ -65,7 +65,12 @@ metadata.json
 # --- Cấu hình local (có RTSP / mật khẩu) ---
 camera_config.json
 
-# --- Model & checkpoint (chỉ giữ README trong modelAi/) ---
+# --- Model & checkpoint (chỉ giữ README trong module_ai/models/) ---
+module_ai/models/*.pt
+module_ai/models/*.pth
+module_ai/models/*.onnx
+module_ai/models/*.engine
+identity_vm_app/modelAi/
 *.pt
 *.pth
 *.onnx

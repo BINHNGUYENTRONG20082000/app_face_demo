@@ -70,7 +70,7 @@ def main() -> None:
     import os
 
     from identity_vm_app import settings as s
-    from identity_vm_app.camera_recognition.hub import (
+    from module_ai.camera.hub import (
         ensure_recognition_hub_started,
         shutdown_recognition_hub,
     )

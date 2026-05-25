@@ -20,7 +20,7 @@ from identity_vm_app.services.video_analyze_tracking import VideoClipCounter
 from identity_vm_app.store.video_analyze_store import get_video_analyze_store
 
 if TYPE_CHECKING:
-    from identity_vm_app.camera_recognition.analyze_recording import _VisualSessionRecorder
+    from module_ai.camera.analyze_recording import _VisualSessionRecorder
 
 logger = logging.getLogger("camera_live_session")
 
@@ -136,7 +136,7 @@ def start_live_session(
 
         overlay_rec: Optional[_VisualSessionRecorder] = None
         if s.IVM_CAMERA_SESSION_OVERLAY_LIVE and s.IVM_ANALYZE_RECORD_VISUAL:
-            from identity_vm_app.camera_recognition.analyze_recording import start_visual_recorder
+            from module_ai.camera.analyze_recording import start_visual_recorder
 
             overlay_path = cmedia.session_overlay_mp4_path(cam, job_id)
             overlay_rec = start_visual_recorder(
@@ -301,7 +301,7 @@ def stop_live_session(camera_id: str) -> Optional[Dict[str, Any]]:
         overlay_info: Dict[str, Any] = {}
         if sess.overlay_recorder is not None:
             overlay_info = sess.overlay_recorder.close()
-            from identity_vm_app.camera_recognition.analyze_recording import (
+            from module_ai.camera.analyze_recording import (
                 _lock as vis_lock,
                 _visual_sessions,
             )
@@ -337,7 +337,7 @@ def stop_live_session(camera_id: str) -> Optional[Dict[str, Any]]:
             height=sess.height,
         )
 
-        from identity_vm_app.camera_recognition.activity_log import record
+        from module_ai.camera.activity_log import record
 
         record(
             cam,

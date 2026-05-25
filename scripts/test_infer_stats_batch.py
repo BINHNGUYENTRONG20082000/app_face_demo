@@ -12,7 +12,7 @@ sys.path.insert(0, str(REPO))
 os.environ["IVM_INFER_STATS_EVERY_N"] = "3"
 os.environ["IVM_INFER_STATS_FIRST_N"] = "3"
 
-from identity_vm_app.camera_recognition.worker import CameraRecognitionConfig, CameraRecognitionWorker  # noqa: E402
+from module_ai.camera.worker import CameraRecognitionConfig, CameraRecognitionWorker  # noqa: E402
 
 
 def main() -> int:
@@ -21,11 +21,11 @@ def main() -> int:
     messages: list[str] = []
 
     with patch(
-        "identity_vm_app.camera_recognition.worker.log_activity",
+        "module_ai.camera.worker.log_activity",
         side_effect=lambda _cid, _ev, msg, **_: messages.append(msg),
     ):
         with patch(
-            "identity_vm_app.camera_recognition.worker.weapon_detection_available",
+            "module_ai.camera.worker.weapon_detection_available",
             return_value=False,
         ):
             for i in range(1, 4):

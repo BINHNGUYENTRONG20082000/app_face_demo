@@ -13,7 +13,7 @@ REPO_ROOT = Path(__file__).resolve().parent.parent
 if str(REPO_ROOT) not in sys.path:
     sys.path.insert(0, str(REPO_ROOT))
 
-from identity_vm_app.camera_recognition.worker import CameraRecognitionConfig, CameraRecognitionWorker
+from module_ai.camera.worker import CameraRecognitionConfig, CameraRecognitionWorker
 from identity_vm_app.services.video_analyze_fps import frame_skip_for_sample
 
 
@@ -64,7 +64,7 @@ class TestReaderCallbackEnqueue(unittest.TestCase):
         frame = np.zeros((32, 32, 3), dtype=np.uint8)
 
         with patch(
-            "identity_vm_app.camera_recognition.worker.get_analyze_enabled",
+            "module_ai.camera.worker.get_analyze_enabled",
             return_value=True,
         ), patch(
             "identity_vm_app.services.camera_live_session.get_active_session",

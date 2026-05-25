@@ -1,16 +1,16 @@
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
 
-from identity_vm_app.api.people_routes import router as people_router
-from identity_vm_app.api.infer_routes import router as infer_router
+from identity_vm_app.api.camera_analyze_reports_routes import router as camera_analyze_reports_router
 from identity_vm_app.api.preview_native_routes import router as preview_native_router
 from identity_vm_app.api.preview_routes import router as preview_router
 from identity_vm_app.api.routes import router as ivm_router
-from identity_vm_app.api.video_analyze_routes import router as video_analyze_router
-from identity_vm_app.api.vm_reports_routes import router as vm_reports_router
-from identity_vm_app.api.camera_analyze_reports_routes import router as camera_analyze_reports_router
-from identity_vm_app.api.weapon_alerts_routes import router as weapon_alerts_router
-from identity_vm_app.camera_recognition.hub import shutdown_recognition_hub
+from module_ai.api.infer_routes import router as infer_router
+from module_ai.api.people_routes import router as people_router
+from module_ai.api.video_analyze_routes import router as video_analyze_router
+from module_ai.api.vm_reports_routes import router as vm_reports_router
+from module_ai.api.weapon_alerts_routes import router as weapon_alerts_router
+from module_ai.camera.hub import shutdown_recognition_hub
 from identity_vm_app.lifecycle import shutdown, startup
 
 

@@ -109,7 +109,7 @@ def save_weapon_crops_for_session(
     """Trả (primary_abs_path, weapon_crops_json) — path tuyệt đối."""
     import json
 
-    from identity_vm_app.services.weapon_crops import (
+    from module_ai.pipelines.weapon_crops import (
         normalize_weapon_class,
         render_weapon_bbox_crop_one_bgr,
         weapons_best_per_class,

@@ -16,7 +16,7 @@ from identity_vm_app.services.event_crops import (
     save_crop_jpeg,
     should_replace_crop,
 )
-from identity_vm_app.services.weapon_crops import save_track_scene_crop_jpeg, save_weapon_crop_jpeg
+from module_ai.pipelines.weapon_crops import save_track_scene_crop_jpeg, save_weapon_crop_jpeg
 
 
 @dataclass
@@ -541,7 +541,7 @@ class IdentityVmStore:
                     if not b64:
                         continue
                     try:
-                        from identity_vm_app.services.weapon_crops import normalize_weapon_class
+                        from module_ai.pipelines.weapon_crops import normalize_weapon_class
 
                         cls = normalize_weapon_class(item.get("class"))
                         jpeg_w = decode_crop_b64(str(b64))

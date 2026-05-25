@@ -27,7 +27,7 @@ import requests
 
 from camera_channel_config import load_camera_channel_specs
 from identity_vm_app import settings as s
-from identity_vm_app.camera_recognition.hub import shutdown_recognition_hub, start_recognition_hub
+from module_ai.camera.hub import shutdown_recognition_hub, start_recognition_hub
 
 logger = logging.getLogger("camera_pipeline")
 

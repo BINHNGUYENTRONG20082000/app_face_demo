@@ -8,7 +8,7 @@ from pathlib import Path
 REPO = Path(__file__).resolve().parent.parent
 sys.path.insert(0, str(REPO))
 
-from identity_vm_app.camera_recognition.worker import CameraRecognitionConfig, CameraRecognitionWorker  # noqa: E402
+from module_ai.camera.worker import CameraRecognitionConfig, CameraRecognitionWorker  # noqa: E402
 
 
 def test_vm_sample_slot() -> None:

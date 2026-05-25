@@ -65,7 +65,7 @@ def vm_weapon_image_url(api_base: str, report_id: str, weapon_class: Optional[st
 def _weapon_types_from_row(row: Dict[str, Any]) -> List[str]:
     import json
 
-    from identity_vm_app.services.weapon_crops import normalize_weapon_class
+    from module_ai.pipelines.weapon_crops import normalize_weapon_class
 
     raw = row.get("weapon_types_json")
     if not raw:
@@ -82,7 +82,7 @@ def _weapon_types_from_row(row: Dict[str, Any]) -> List[str]:
 def vm_weapon_crop_urls(api_base: str, row: Dict[str, Any]) -> List[Dict[str, str]]:
     """URL crop từng loại vũ khí (gun + knife đồng thời nếu có trong báo cáo)."""
     from identity_vm_app.services.video_report_crops import parse_weapon_boxes
-    from identity_vm_app.services.weapon_crops import (
+    from module_ai.pipelines.weapon_crops import (
         normalize_weapon_class,
         parse_weapon_crops_json,
         weapons_best_per_class,

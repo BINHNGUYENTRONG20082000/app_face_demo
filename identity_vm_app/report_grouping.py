@@ -4,7 +4,7 @@ from __future__ import annotations
 
 from typing import Any, Dict, List, Optional
 
-from services.text import remove_accents
+from module_ai.utils.text import remove_accents
 
 
 def normalize_person_name(name: str) -> str:

@@ -1,17 +1,13 @@
-"""Luồng nhận diện theo camera (bật/tắt qua /ivm/cameras/{id}/analyze) — pattern VisionMaster."""
-
-from identity_vm_app.camera_recognition.hub import (
-    RecognitionHub,
+from module_ai.camera.hub import (  # noqa: F401
     ensure_recognition_hub_started,
     get_recognition_hub,
     shutdown_recognition_hub,
-    start_recognition_hub,
 )
+from module_ai.camera.worker import CameraRecognitionWorker  # noqa: F401
 
 __all__ = [
-    "RecognitionHub",
-    "get_recognition_hub",
-    "start_recognition_hub",
+    "CameraRecognitionWorker",
     "ensure_recognition_hub_started",
+    "get_recognition_hub",
     "shutdown_recognition_hub",
 ]

@@ -3,9 +3,9 @@ from __future__ import annotations
 from typing import TYPE_CHECKING, Optional
 
 if TYPE_CHECKING:
-    from packages.persistence.face_database import FaceDatabase
+    from module_ai.persistence.face_database import FaceDatabase
 
-    from identity_vm_app.engine.insightface_engine import InsightFaceEngine
+    from module_ai.engine.insightface_engine import InsightFaceEngine
     from identity_vm_app.recorder.registry import RecorderRegistry
     from identity_vm_app.store.sqlite_store import IdentityVmStore
 

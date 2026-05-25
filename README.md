@@ -29,8 +29,8 @@ cd app_face
 # 3. Sao chép cấu hình camera mẫu (chỉnh RTSP/webcam của bạn)
 copy camera_config.example.json camera_config.json
 
-# 4. Đặt model YOLO/vũ khí vào identity_vm_app\modelAi\
-#    (xem identity_vm_app\modelAi\README.md)
+# 4. Đặt model YOLO/vũ khí vào module_ai\models\
+#    (xem module_ai\models\README.md)
 ```
 
 Trên Linux/macOS:
@@ -88,23 +88,31 @@ scripts\run_identity_vm_ui.bat
 
 ## Cấu trúc dự án
 
+**Backend AI (bàn giao):** xem [`module_ai/README.md`](module_ai/README.md) — engine, persistence, camera infer, pipelines, API nhận diện.
+
 ```text
 app_face/
-├── identity_vm_app/          # Ứng dụng chính
-│   ├── api/                  # FastAPI routes
-│   ├── camera_recognition/   # Worker RTSP + infer
+├── module_ai/                # Backend ML/inference + API AI (mới)
 │   ├── engine/               # InsightFace, YOLO, GPU cleanup
+│   ├── persistence/          # FaceDatabase
+│   ├── camera/               # Worker RTSP + infer
+│   ├── pipelines/            # Video offline, weapon crops
+│   ├── jobs/                 # Bulk register
+│   ├── models/               # Trọng số YOLO/vũ khí (local, không commit)
+│   └── api/                  # face_routes, people, infer, video-analyze, …
+├── identity_vm_app/          # Host: SQLite, recorder, preview, routes_host
+│   ├── api/                  # app.py, routes_host, preview routes
 │   ├── preview/              # MJPEG preview hub
 │   ├── recorder/             # Archive FFmpeg
-│   ├── services/             # Video analyze, export, reports
+│   ├── services/             # Export, camera session (không infer core)
 │   ├── store/                # SQLite
-│   ├── modelAi/              # Trọng số YOLO/vũ khí (local, không commit)
-│   ├── streamlit_test.py     # UI đầy đủ
-│   └── camera_dashboard.py   # UI dashboard
+│   ├── engine/               # Shim → module_ai.engine
+│   ├── camera_recognition/   # Shim → module_ai.camera
+│   └── streamlit_test.py     # UI đầy đủ
 ├── packages/
-│   ├── persistence/          # FaceDatabase (embeddings)
+│   ├── persistence/          # Shim → module_ai.persistence
 │   └── camera_stream/        # RTSP reader ổn định
-├── services/text.py          # Chuẩn hoá tên tiếng Việt
+├── services/text.py          # Shim → module_ai.utils.text
 ├── camera_pipeline/          # CLI worker camera độc lập
 ├── scripts/                  # Script test / launcher .bat
 ├── tests/                    # Pytest
@@ -139,7 +147,7 @@ Mặc định lưu tại `identity_vm_data/` (gitignore):
 | `IVM_WEAPON_ENABLED` | `1` | Bật phát hiện vũ khí |
 | `IVM_USE_FAISS` | `0` | Dùng FAISS thay sklearn search |
 
-Xem thêm trong `identity_vm_app/settings.py`.
+Xem thêm: `identity_vm_app/settings.py` (host), `module_ai/config/settings.py` (AI).
 
 ## API chính
 
@@ -156,9 +164,13 @@ Xem thêm trong `identity_vm_app/settings.py`.
 ## Kiểm thử
 
 ```bash
-python -m pytest tests/ -q
+python -m pytest tests/test_bulk_folder_register_flow.py tests/test_weapon_alerts.py tests/test_identify_infer_workers.py -q
+python main.py --no-camera
+curl -s http://127.0.0.1:8010/ivm/health
 python scripts/smoke_ivm_cameras.py
 ```
+
+Chi tiết smoke AI: [`module_ai/README.md`](module_ai/README.md#kiểm-thử--test-plan).
 
 Worker camera riêng (khi API đã chạy):
 
@@ -169,5 +181,5 @@ python -m camera_pipeline --api http://127.0.0.1:8010
 ## Ghi chú
 
 - File `camera_config.json` chứa thông tin RTSP — **không commit**; dùng `camera_config.example.json` làm mẫu.
-- Model `.pt` / `.onnx` lớn — đặt local theo hướng dẫn `identity_vm_app/modelAi/README.md`.
-- InsightFace tải model `buffalo_l` lần đầu chạy (~300 MB).
+- Model `.pt` / `.onnx` lớn — đặt local theo `module_ai/models/README.md` (legacy `identity_vm_app/modelAi/` vẫn fallback một release).
+- InsightFace `buffalo_l`: đặt vào `module_ai/models/buffalo_l/` (mặc định không tự tải; xem `module_ai/models/README.md`).

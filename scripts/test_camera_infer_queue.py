@@ -12,7 +12,7 @@ import numpy as np
 REPO = Path(__file__).resolve().parent.parent
 sys.path.insert(0, str(REPO))
 
-from identity_vm_app.camera_recognition.worker import (  # noqa: E402
+from module_ai.camera.worker import (  # noqa: E402
     CameraRecognitionConfig,
     CameraRecognitionWorker,
     _QueuedInferFrame,
@@ -72,14 +72,14 @@ def test_dedicated_model_stack_lazy() -> None:
     fake_engine = MagicMock()
     fake_db = MagicMock()
     with patch(
-        "identity_vm_app.engine.insightface_engine.InsightFaceEngine",
+        "module_ai.engine.insightface_engine.InsightFaceEngine",
         return_value=fake_engine,
     ):
         with patch("identity_vm_app.state.state") as st:
             st.face_db = fake_db
             st.engine = None
             with patch(
-                "identity_vm_app.engine.yolo_person_tracker.vm_tracking_available",
+                "module_ai.engine.yolo_person_tracker.vm_tracking_available",
                 return_value=False,
             ):
                 eng, trk, db = w._models.ensure_loaded()

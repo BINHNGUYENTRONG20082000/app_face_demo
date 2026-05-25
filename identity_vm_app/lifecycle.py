@@ -8,11 +8,11 @@ import time
 from identity_vm_app import settings as s
 from identity_vm_app.preview.mjpeg_hub import shutdown_preview_hub
 from identity_vm_app.preview.native_reader_hub import shutdown_native_preview_hub
-from identity_vm_app.engine.insightface_engine import InsightFaceEngine
+from module_ai.engine.insightface_engine import InsightFaceEngine
 from identity_vm_app.recorder.registry import RecorderRegistry
 from identity_vm_app.state import state
 from identity_vm_app.store.sqlite_store import IdentityVmStore
-from packages.persistence.face_database import FaceDatabase
+from module_ai.persistence.face_database import FaceDatabase
 
 _engine_lock = threading.Lock()
 
@@ -78,7 +78,7 @@ def startup(*, load_face_model: bool = True) -> None:
 
     if s.IVM_AUTO_START_CAMERA_WORKERS and not os.environ.get("IVM_NO_CAMERA_WORKERS"):
         try:
-            from identity_vm_app.camera_recognition.hub import ensure_recognition_hub_started
+            from module_ai.camera.hub import ensure_recognition_hub_started
 
             ensure_recognition_hub_started()
             print(
@@ -101,7 +101,7 @@ def release_inference_engine() -> None:
         eng = state.engine
         state.engine = None
     if eng is not None:
-        from identity_vm_app.engine.gpu_cleanup import dispose_insightface_engine
+        from module_ai.engine.gpu_cleanup import dispose_insightface_engine
 
         dispose_insightface_engine(eng)
     else:
@@ -120,7 +120,7 @@ def shutdown() -> None:
     shutdown_preview_hub()
     shutdown_native_preview_hub()
     try:
-        from identity_vm_app.camera_recognition.weapon import release_weapon_detectors
+        from module_ai.camera.weapon import release_weapon_detectors
 
         release_weapon_detectors()
     except Exception:

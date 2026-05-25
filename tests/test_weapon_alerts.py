@@ -2,7 +2,7 @@
 
 from __future__ import annotations
 
-from identity_vm_app.camera_recognition import weapon_alerts
+from module_ai.camera import weapon_alerts
 from identity_vm_app.services.weapon_track_status import weapon_should_alert
 
 

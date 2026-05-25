@@ -288,7 +288,7 @@ def _weapon_crop_url_list(
     weapon_crop_url: Optional[str] = None,
     weapon_types: Optional[List[str]] = None,
 ) -> List[Dict[str, str]]:
-    from identity_vm_app.services.weapon_crops import normalize_weapon_class
+    from module_ai.pipelines.weapon_crops import normalize_weapon_class
 
     out: List[Dict[str, str]] = []
     seen: set[str] = set()

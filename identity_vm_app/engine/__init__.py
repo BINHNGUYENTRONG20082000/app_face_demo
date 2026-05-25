@@ -1,3 +1,3 @@
-from identity_vm_app.engine.insightface_engine import DetectedFace, InsightFaceEngine
+from module_ai.engine import DetectedFace, InsightFaceEngine  # noqa: F401
 
 __all__ = ["DetectedFace", "InsightFaceEngine"]

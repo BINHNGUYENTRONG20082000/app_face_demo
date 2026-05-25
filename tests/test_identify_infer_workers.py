@@ -20,16 +20,24 @@ class TestResolveIdentifyInferWorkers(unittest.TestCase):
             "IVM_IDENTIFY_BATCH_API_MAX_INFER_WORKERS",
         ):
             os.environ.pop(k, None)
+        import module_ai.config.settings as ai_s
         import identity_vm_app.settings as ivm_s
 
+        importlib.reload(ai_s)
         importlib.reload(ivm_s)
+
+    def _reload_settings(self):
+        import module_ai.config.settings as ai_s
+        import identity_vm_app.settings as ivm_s
+
+        importlib.reload(ai_s)
+        importlib.reload(ivm_s)
+        return ivm_s
 
     def test_defaults_and_clamp(self) -> None:
         os.environ["IVM_IDENTIFY_BATCH_INFER_WORKERS"] = "1"
         os.environ["IVM_IDENTIFY_BATCH_API_MAX_INFER_WORKERS"] = "16"
-        import identity_vm_app.settings as ivm_s
-
-        importlib.reload(ivm_s)
+        ivm_s = self._reload_settings()
         self.assertEqual(ivm_s.resolve_identify_infer_workers(None), 1)
         self.assertEqual(ivm_s.resolve_identify_infer_workers(4), 4)
         self.assertEqual(ivm_s.resolve_identify_infer_workers(99), 16)
@@ -37,9 +45,7 @@ class TestResolveIdentifyInferWorkers(unittest.TestCase):
     def test_api_cap_limits_env_default(self) -> None:
         os.environ["IVM_IDENTIFY_BATCH_INFER_WORKERS"] = "8"
         os.environ["IVM_IDENTIFY_BATCH_API_MAX_INFER_WORKERS"] = "4"
-        import identity_vm_app.settings as ivm_s
-
-        importlib.reload(ivm_s)
+        ivm_s = self._reload_settings()
         self.assertEqual(ivm_s.resolve_identify_infer_workers(None), 4)
         self.assertEqual(ivm_s.resolve_identify_infer_workers(3), 3)
 

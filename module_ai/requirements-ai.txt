@@ -1,0 +1,22 @@
+# module_ai — ML / inference dependencies (subset of repo requirements.txt)
+# Install: pip install -r module_ai/requirements-ai.txt
+# GPU: use onnxruntime-gpu + torch CUDA matching your driver.
+
+opencv-python>=4.8.0
+numpy>=1.24.0
+scipy>=1.10.0
+insightface>=0.7.3
+onnxruntime-gpu>=1.16.0
+scikit-image>=0.21.0
+scikit-learn>=1.3.0
+ultralytics>=8.0.0
+torch>=2.0.0
+
+# Optional faster face search (IVM_USE_FAISS=1)
+faiss-cpu>=1.8.0
+
+# API layer (when mounting module_ai routers standalone)
+fastapi>=0.100.0
+pydantic>=2.0.0
+python-multipart>=0.0.6
+aiofiles>=23.0.0

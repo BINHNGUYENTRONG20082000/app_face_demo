@@ -44,14 +44,14 @@ def finish_analyze_stop(camera_id: str) -> Optional[Dict[str, Any]]:
     except Exception as ex:
         logger.warning("[%s] stop_live_session: %s", cam, ex)
     try:
-        from identity_vm_app.engine.gpu_cleanup import finalize_camera_recognition_session
+        from module_ai.engine.gpu_cleanup import finalize_camera_recognition_session
 
         finalize_camera_recognition_session(cam)
     except Exception as ex:
         logger.warning("[%s] finalize_camera_recognition_session: %s", cam, ex)
 
     try:
-        from identity_vm_app.camera_recognition.activity_log import record
+        from module_ai.camera.activity_log import record
 
         record(
             cam,
@@ -96,7 +96,7 @@ def set_analyze_enabled(
         )
         source: Any = None
         try:
-            from identity_vm_app.camera_recognition.hub import get_recognition_hub
+            from module_ai.camera.hub import get_recognition_hub
 
             w = get_recognition_hub().get_worker(cam)
             if w is not None:
@@ -105,7 +105,7 @@ def set_analyze_enabled(
         except Exception:
             pass
         try:
-            from identity_vm_app.camera_recognition.weapon_alerts import reset_weapon_alerts
+            from module_ai.camera.weapon_alerts import reset_weapon_alerts
 
             reset_weapon_alerts(cam)
         except Exception:
@@ -132,7 +132,7 @@ def set_analyze_enabled(
         _enabled[cam] = en
 
     if prev != en:
-        from identity_vm_app.camera_recognition.activity_log import record
+        from module_ai.camera.activity_log import record
 
         state = "BẬT" if en else "TẮT"
         record(
@@ -144,7 +144,7 @@ def set_analyze_enabled(
         )
         logger.info("[%s] Nhận diện %s", cam, state)
         try:
-            from identity_vm_app.camera_recognition.analyze_recording import sync_analyze_recording
+            from module_ai.camera.analyze_recording import sync_analyze_recording
 
             sync_analyze_recording(cam, en)
         except Exception as ex:
@@ -152,7 +152,7 @@ def set_analyze_enabled(
 
         if not en:
             try:
-                from identity_vm_app.camera_recognition.weapon_alerts import reset_weapon_alerts
+                from module_ai.camera.weapon_alerts import reset_weapon_alerts
 
                 reset_weapon_alerts(cam)
             except Exception:
@@ -160,7 +160,7 @@ def set_analyze_enabled(
             with _stop_lock:
                 _stopping[cam] = True
             try:
-                from identity_vm_app.camera_recognition.hub import get_recognition_hub
+                from module_ai.camera.hub import get_recognition_hub
 
                 w = get_recognition_hub().get_worker(cam)
                 if w is not None:

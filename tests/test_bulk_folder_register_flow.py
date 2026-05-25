@@ -79,9 +79,9 @@ class TestBulkFolderRegisterFlow(unittest.TestCase):
         self._td.cleanup()
 
     def test_run_folder_register_writes_face_db(self) -> None:
-        from identity_vm_app.bulk_folder_register import run_folder_register
+        from module_ai.jobs.bulk_folder_register import run_folder_register
         from identity_vm_app.store.sqlite_store import IdentityVmStore
-        from packages.persistence.face_database import FaceDatabase
+        from module_ai.persistence.face_database import FaceDatabase
 
         import identity_vm_app.settings as s
 
@@ -89,7 +89,7 @@ class TestBulkFolderRegisterFlow(unittest.TestCase):
         db = FaceDatabase(str(s.IVM_FACE_DB_DIR), use_faiss=False)
 
         with patch(
-            "identity_vm_app.bulk_folder_register.InsightFaceEngine",
+            "module_ai.jobs.bulk_folder_register.InsightFaceEngine",
             FakeInsightFaceEngine,
         ):
             stats = run_folder_register(
@@ -122,9 +122,9 @@ class TestBulkFolderRegisterFlow(unittest.TestCase):
 
     def test_empty_face_db_clears_stale_checkpoint_then_registers(self) -> None:
         """Checkpoint 'ok' cũ trong khi face DB trống phải được xóa tự động (resume=True)."""
-        from identity_vm_app.bulk_folder_register import run_folder_register
+        from module_ai.jobs.bulk_folder_register import run_folder_register
         from identity_vm_app.store.sqlite_store import IdentityVmStore
-        from packages.persistence.face_database import FaceDatabase
+        from module_ai.persistence.face_database import FaceDatabase
 
         import identity_vm_app.settings as s
 
@@ -137,7 +137,7 @@ class TestBulkFolderRegisterFlow(unittest.TestCase):
         self.assertEqual(len(db.metadata), 0)
 
         with patch(
-            "identity_vm_app.bulk_folder_register.InsightFaceEngine",
+            "module_ai.jobs.bulk_folder_register.InsightFaceEngine",
             FakeInsightFaceEngine,
         ):
             stats = run_folder_register(
@@ -162,9 +162,9 @@ class TestBulkFolderRegisterFlow(unittest.TestCase):
         os.environ["IVM_BULK_INFER_WORKERS"] = "4"
         _reload_ivm_settings(Path(self.ivm_data))
 
-        from identity_vm_app.bulk_folder_register import run_folder_register
+        from module_ai.jobs.bulk_folder_register import run_folder_register
         from identity_vm_app.store.sqlite_store import IdentityVmStore
-        from packages.persistence.face_database import FaceDatabase
+        from module_ai.persistence.face_database import FaceDatabase
 
         import identity_vm_app.settings as s_mod
 
@@ -193,7 +193,7 @@ class TestBulkFolderRegisterFlow(unittest.TestCase):
         db = FaceDatabase(str(s_mod.IVM_FACE_DB_DIR), use_faiss=False)
 
         with patch(
-            "identity_vm_app.bulk_folder_register.InsightFaceEngine",
+            "module_ai.jobs.bulk_folder_register.InsightFaceEngine",
             EveryThirdNoFace,
         ):
             stats = run_folder_register(
@@ -279,7 +279,7 @@ class TestBulkProgressJsonWrites(unittest.TestCase):
         with tempfile.TemporaryDirectory() as td:
             tp = Path(td)
             pj = tp / "progress.json"
-            from identity_vm_app.bulk_folder_register import write_register_folder_progress
+            from module_ai.jobs.bulk_folder_register import write_register_folder_progress
 
             write_register_folder_progress(
                 pj,

@@ -229,28 +229,28 @@ def api_person_sub_data(
 
 @router.get("/ivm/reports/get-face-image/{report_id}")
 def reports_get_face_image(report_id: str):
-    from identity_vm_app.api.video_analyze_routes import get_report_face_image
+    from module_ai.api.video_analyze_routes import get_report_face_image
 
     return get_report_face_image(report_id)
 
 
 @router.get("/ivm/reports/get-person-image/{report_id}")
 def reports_get_person_image(report_id: str):
-    from identity_vm_app.api.video_analyze_routes import get_report_person_image
+    from module_ai.api.video_analyze_routes import get_report_person_image
 
     return get_report_person_image(report_id)
 
 
 @router.get("/ivm/reports/get-weapon-image/{report_id}")
 def reports_get_weapon_image(report_id: str, weapon_class: Optional[str] = None):
-    from identity_vm_app.api.video_analyze_routes import get_report_weapon_image
+    from module_ai.api.video_analyze_routes import get_report_weapon_image
 
     return get_report_weapon_image(report_id, weapon_class=weapon_class)
 
 
 @router.get("/ivm/reports/get-track-scene-image/{report_id}")
 def reports_get_track_scene_image(report_id: str):
-    from identity_vm_app.api.video_analyze_routes import get_report_track_scene_image
+    from module_ai.api.video_analyze_routes import get_report_track_scene_image
 
     return get_report_track_scene_image(report_id)
 

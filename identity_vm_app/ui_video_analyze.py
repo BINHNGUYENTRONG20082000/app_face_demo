@@ -548,13 +548,13 @@ def _vm_person_url(base: str, row: Dict[str, Any]) -> Optional[str]:
 
 
 def _vm_face_url(base: str, row: Dict[str, Any]) -> Optional[str]:
-    u = row.get("face_image_url")
+    u = _face_thumb_url(base, row)
     if u:
         return u
-    rid = row.get("id")
+    rid = row.get("first_frame_report_id") or row.get("id")
     if rid:
         return f"{base.rstrip('/')}/ivm/reports/get-face-image/{rid}"
-    return _face_thumb_url(base, row)
+    return None
 
 
 def _suspect_face_url(base: str, suspect: Dict[str, Any]) -> Optional[str]:
@@ -663,7 +663,7 @@ def _vm_gallery_thumb_url(base: str, row: Dict[str, Any]) -> Optional[str]:
 
 
 def _row_has_face_crop(row: Dict[str, Any]) -> bool:
-    if row.get("face_img") or row.get("face_image_url"):
+    if row.get("face_img"):
         return True
     bf = row.get("box_face")
     if bf is None:
